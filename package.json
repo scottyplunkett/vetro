@@ -1,0 +1,32 @@
+{
+  "name": "vetro",
+  "version": "1.0.0",
+  "description": "Community retrospective chat app for Code Platoon Alumni.",
+  "main": "index.js",
+  "scripts": {
+    "test": "t"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scottyplunkett/vetro.git"
+  },
+  "keywords": [
+    "chat",
+    "veterans",
+    "node",
+    "socket.io",
+    "retro",
+    "community"
+  ],
+  "author": "Scott Plunkett",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scottyplunkett/vetro/issues"
+  },
+  "homepage": "https://github.com/scottyplunkett/vetro#readme",
+  "dependencies": {
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "socket.io": "^2.2.0"
+  }
+}
