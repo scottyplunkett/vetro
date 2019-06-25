@@ -3,12 +3,9 @@ const Schema = mongoose.Schema;
 
 const chatSchema = new Schema(
   {
-    message: {
-      type: String
-    },
-    sender: {
-      type: String
-    }
+    message: String,
+    mood: String,
+    sender: String
   },
   {
     timestamps: true
