@@ -1,2 +1,3 @@
-# vetro
-Node.js Community retrospective application for the Code Platoon Alumni Association
+# Vetro
+
+The CPAA Community Retro for Code Platoon Alumni.
