@@ -1,6 +1,12 @@
 <!doctype html>
 <html>
   <head>
+    <script>
+      var host = "www.vetro.space";
+      if ((host == window.location.host) && (window.location.protocol != "https:")) {
+        window.location.protocol = "https";
+      }
+    </script>
     <title>Vetro</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <!------ Include the above in your HEAD tag ---------->
