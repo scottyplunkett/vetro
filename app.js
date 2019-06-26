@@ -20,6 +20,9 @@ app.use(bodyParser.json());
 //routes
 app.use("/chats", chatRouter);
 app.use("/login", loginRouter);
+app.get("/.well-known/acme-challenge/FG7i5avzXuHo_ICErbGQaG8dvBJm7uIBO_07tks1qyI", function(req, res) {
+  res.send('FG7i5avzXuHo_ICErbGQaG8dvBJm7uIBO_07tks1qyI.e2-OE-z8o6GQtND9TiJoZN1dqZYE2pQuJW3aZE15bLI')
+})
 
 //set the express.static middleware
 app.use(express.static(__dirname + "/public"));
