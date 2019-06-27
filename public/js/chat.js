@@ -1,30 +1,42 @@
 var socket = io();
 var messages = document.getElementById("messages");
 
+function scrollToTop() {
+  messages.scrollIntoView(true); // Top
+}
+
+function scrollToBottom() {
+  messages.scrollIntoView(false); // Bottom
+}
+
 (function() {
   $("form").submit(function(e) {
-    let li = document.createElement("li");
     e.preventDefault(); // prevents page reloading
-    socket.emit("chat message", $("#message").val());
+    socket.emit("chat message sentiment", $("#message").val(), $('#sentiment').val());
+    let div = document.createElement("div");
+    let meta = document.createElement("div");
+    div.className += "card-panel hoverable"
+    meta.className += "subfont"
+    messages.appendChild(div).append($("#message").val());
+    div
+      .appendChild(meta)
+      .append(`${$('#sentiment').val()} posted: just now`);
 
-    messages.appendChild(li).append($("#message").val());
-    let span = document.createElement("span");
-    messages.appendChild(span).append("by " + "Anonymous" + ": " + "just now");
-
-    $("#message").val("");
-
+    document.getElementById("form").reset();
     return false;
   });
 
   socket.on("received", data => {
-    let li = document.createElement("li");
-    let span = document.createElement("span");
-    var messages = document.getElementById("messages");
-    messages.appendChild(li).append(data.message);
-    messages.appendChild(span).append("by " + "anonymous" + ": " + "just now");
-    console.log("Hello bingo!");
-  });
-})();
+      let div = document.createElement("div");
+      let meta = document.createElement("div");
+      div.className += "card-panel hoverable"
+      meta.className += "subfont"
+      messages.appendChild(div).append(data.message);
+      div
+        .appendChild(meta)
+        .append(`${data.sentiment} posted: ${formatTimeAgo(data.createdAt)}`);
+    });
+  })();
 
 // fetching initial chat messages from the database
 (function() {
@@ -34,34 +46,46 @@ var messages = document.getElementById("messages");
     })
     .then(json => {
       json.map(data => {
-        let li = document.createElement("li");
-        let span = document.createElement("span");
-        messages.appendChild(li).append(data.message);
-        messages
-          .appendChild(span)
-          .append("by " + data.sender + ": " + formatTimeAgo(data.createdAt));
+        let div = document.createElement("div");
+        let meta = document.createElement("div");
+        div.className += "card-panel hoverable"
+        meta.className += "subfont"
+        messages.appendChild(div).append(data.message);
+        div
+          .appendChild(meta)
+          .append(`${data.sentiment} posted: ${formatTimeAgo(data.createdAt)}`);
       });
     });
 })();
 
-//is typing...
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('select');
+  var instances = M.FormSelect.init(elems, {});
+});
 
 let messageInput = document.getElementById("message");
 let typing = document.getElementById("typing");
+var timeout;
+
+function timeoutFunction() {
+  socket.emit("notifyStopTyping");
+  socket.emit("typing", false);
+  typing.innerText = "";
+  timeout = setTimeout(timeoutFunction, 150)
+}
 
 //isTyping event
-messageInput.addEventListener("keypress", () => {
+messageInput.addEventListener("keydown", () => {
   socket.emit("typing", { user: "Someone", message: "is typing..." });
+  clearTimeout(timeout)
+  timeout = setTimeout(timeoutFunction, 0)
 });
+
+
 
 socket.on("notifyTyping", data => {
-  typing.innerText = data.user + " " + data.message;
-  console.log(data.user + data.message);
-});
-
-//stop typing
-messageInput.addEventListener("keyup", () => {
-  socket.emit("stopTyping", "");
+  msg = data.user && data.message ? data.user + " " + data.message : '';
+  typing.innerText = msg;
 });
 
 socket.on("notifyStopTyping", () => {

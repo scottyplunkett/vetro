@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const chatSchema = new Schema(
   {
     message: String,
-    mood: String,
+    sentiment: String,
     sender: String
   },
   {

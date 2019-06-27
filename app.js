@@ -4,7 +4,6 @@ const app = express();
 const dateTime = require("simple-datetime-formater");
 const bodyParser = require("body-parser");
 const chatRouter = require("./route/chatroute");
-const loginRouter = require("./route/loginRoute");
 
 //require the http module
 const http = require("http").Server(app);
@@ -19,7 +18,6 @@ app.use(bodyParser.json());
 
 //routes
 app.use("/chats", chatRouter);
-app.use("/login", loginRouter);
 
 //set the express.static middleware
 app.use(express.static(__dirname + "/public"));
@@ -39,9 +37,11 @@ socket.on("connection", socket => {
     console.log("user disconnected");
   });
 
+  var timeout;
+
   //Someone is typing
   socket.on("typing", data => {
-    socket.broadcast.emit("notifyTyping", {
+    if (data.user && data.message) socket.broadcast.emit("notifyTyping", {
       user: data.user,
       message: data.message
     });
@@ -52,17 +52,13 @@ socket.on("connection", socket => {
     socket.broadcast.emit("notifyStopTyping");
   });
 
-  socket.on("chat message", function(msg) {
+  socket.on("chat message sentiment", function(msg, sentiment) {
     console.log("message: " + msg);
-
-    //broadcast message to everyone in port:5000 except yourself.
-    socket.broadcast.emit("received", { message: msg });
-
-    //save chat to the database
+    console.log("sentiment: " + sentiment);
+    socket.broadcast.emit("received", { message: msg, sentiment: sentiment });
     connect.then(db => {
       console.log("connected correctly to the server");
-      let chatMessage = new Chat({ message: msg, sender: "Anonymous" });
-
+      let chatMessage = new Chat({ message: msg, sentiment: sentiment, sender: "Anonymous" });
       chatMessage.save();
     });
   });
