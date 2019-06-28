@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "Community retrospective chat app for Code Platoon Alumni.",
   "main": "app.js",
+  "jest": {
+    "setupFilesAfterEnv": ["./tests/setup.js"]
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node app.js"
   },
   "repository": {
@@ -30,6 +33,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "jest": "^24.8.0",
     "mongoose": "^5.4.14",
     "node-localstorage": "^1.3.1",
     "simple-datetime-formater": "^1.0.8",
