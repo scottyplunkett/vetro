@@ -14,62 +14,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   <body>
-  <header>
-    <nav class="nav-extended">
-      <div class="nav-wrapper">
-        <a href="#" class="brand-logo center black-text">Vetro<span class="teal-text">.</span>space</a>
-        <ul class="right">
-          <li><i onclick="scrollToTop();" class="material-icons black-text">arrow_upward</i></li>
-          <li><i onclick="scrollToBottom();" class="material-icons black-text">arrow_downward</i></li>
-        </ul>
-      </div>
-      <div class="nav-content flow-text center teal-text text-2">
-        A real-time anonymous community retrospective .<span class="black-text">space</span> for Code Platoon Alumni.
-      </div>
-    </nav>
-  </header>
-  <main>
-    <div id="scroll" class="row">
-      <span class="flow-text">
-        <ul id ="messages" class="collection">
-        </ul>
-      </span>
-    </div>
-  </main>
-  <i id="typing"></i>
-  <footer class="page-footer">
-    <div class="container">
-      <form id="form">
-        <div class="row">
-          <div class="col s6 m3">
-            <div class="input-field">
-              <select id="sentiment">
-                <option selected>Haz Feels...</option>
-                <option value="◕‿◕">◕‿◕</option>
-                <option value="ↂ_ↂ">ↂ_ↂ</option>
-                <option value="◕︵◕">◕︵◕</option>
-              </select>
-            </div>
-          </div>
-          <div class="col s12 m8">
-            <div class="input-field">
-              <label class="active" for="message">Thoughts</label>
-              <input id="message" class="message_input" placeholder="Type your message here..." />
-            </div>
-          </div>
-          <div class="col s4 m1">
-            <button class="btn-large black waves-effect waves-teal" type="submit" name="action" onclick="setTimeout(function(){ scrollToBottom(); }, 100);">
-            Post
-            </button>
-          </div>
+    <header>
+      <nav class="nav-extended">
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo center black-text">Vetro<span class="teal-text">.</span>space</a>
+          <ul class="right">
+            <li><i onclick="scrollToTop();" class="material-icons black-text">arrow_upward</i></li>
+            <li><i onclick="scrollToBottom();" class="material-icons black-text">arrow_downward</i></li>
+          </ul>
         </div>
-      </form>
-    </div>
-  </footer>
-  <script src="js/materialize.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/gh/rexeze/formatTimeStamp/src/index-cdn.js"></script>
-  <script src="/js/socket.js"></script>
-  <script src="/js/chat.js"></script>
-</body>
+        <div class="nav-content flow-text center teal-text text-2">
+          A real-time anonymous community retrospective .<span class="black-text">space</span> for Code Platoon Alumni.
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div id="scroll" class="row">
+        <span class="flow-text">
+          <ul id ="messages" class="collection">
+          </ul>
+        </span>
+      </div>
+    </main>
+    <i id="typing"></i>
+    <footer class="page-footer">
+      <div class="container">
+        <form id="form">
+          <div class="row">
+            <div class="col s6 m3">
+              <div class="input-field">
+                <select id="sentiment">
+                  <option selected>Haz Feels...</option>
+                  <option value="◕‿◕">◕‿◕</option>
+                  <option value="ↂ_ↂ">ↂ_ↂ</option>
+                  <option value="◕︵◕">◕︵◕</option>
+                </select>
+              </div>
+            </div>
+            <div class="col s12 m8">
+              <div class="input-field">
+                <label class="active" for="message">Thoughts</label>
+                <input id="message" class="message_input" placeholder="Type your message here..." />
+              </div>
+            </div>
+            <div class="col s4 m1">
+              <button class="btn-large black waves-effect waves-teal" type="submit" name="action" onclick="setTimeout(function(){ scrollToBottom(); }, 100);">
+              Post
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/rexeze/formatTimeStamp/src/index-cdn.js"></script>
+    <script src="js/vendor/materialize.min.js"></script>
+    <script src="js/vendor/socket.js"></script>
+    <script src="js/chat.js"></script>
+  </body>
 </html>

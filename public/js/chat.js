@@ -1,15 +1,27 @@
-var socket = io();
-var messages = document.getElementById("messages");
+const messages = document.getElementById("messages");
+const messageInput = document.getElementById("message");
 
-function scrollToTop() {
+let socket = io();
+let typing = document.getElementById("typing");
+
+var timeout;
+
+timeoutFunction = () => {
+  socket.emit("notifyStopTyping");
+  socket.emit("typing", false);
+  typing.innerText = "";
+  timeout = setTimeout(timeoutFunction, 150)
+}
+
+scrollToTop = () => {
   messages.scrollIntoView(true); // Top
 }
 
-function scrollToBottom() {
+scrollToBottom = () => {
   messages.scrollIntoView(false); // Bottom
 }
 
-(function() {
+submitMessages = (function() {
   $("form").submit(function(e) {
     e.preventDefault(); // prevents page reloading
     socket.emit("chat message sentiment", $("#message").val(), $('#sentiment').val());
@@ -36,10 +48,10 @@ function scrollToBottom() {
         .appendChild(meta)
         .append(`${data.sentiment} posted: ${formatTimeAgo(data.createdAt)}`);
     });
-  })();
-
+  })
+();
 // fetching initial chat messages from the database
-(function() {
+fetchMessages = (function() {
   fetch("/chats")
     .then(data => {
       return data.json();
@@ -56,32 +68,8 @@ function scrollToBottom() {
           .append(`${data.sentiment} posted: ${formatTimeAgo(data.createdAt)}`);
       });
     });
-})();
-
-document.addEventListener('DOMContentLoaded', function() {
-  var elems = document.querySelectorAll('select');
-  var instances = M.FormSelect.init(elems, {});
-});
-
-let messageInput = document.getElementById("message");
-let typing = document.getElementById("typing");
-var timeout;
-
-function timeoutFunction() {
-  socket.emit("notifyStopTyping");
-  socket.emit("typing", false);
-  typing.innerText = "";
-  timeout = setTimeout(timeoutFunction, 150)
-}
-
-//isTyping event
-messageInput.addEventListener("keydown", () => {
-  socket.emit("typing", { user: "Someone", message: "is typing..." });
-  clearTimeout(timeout)
-  timeout = setTimeout(timeoutFunction, 0)
-});
-
-
+  })
+();
 
 socket.on("notifyTyping", data => {
   msg = data.user && data.message ? data.user + " " + data.message : '';
@@ -91,3 +79,19 @@ socket.on("notifyTyping", data => {
 socket.on("notifyStopTyping", () => {
   typing.innerText = "";
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('select');
+  var instances = M.FormSelect.init(elems, {});
+});
+
+//isTyping event
+messageInput.addEventListener("keydown", () => {
+  socket.emit("typing", { user: "Someone", message: "is typing..." });
+  clearTimeout(timeout)
+  timeout = setTimeout(timeoutFunction, 0)
+});
+
+fetchMessages;
+submitMessages;
+
